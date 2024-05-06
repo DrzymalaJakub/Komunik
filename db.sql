@@ -12,7 +12,7 @@ CREATE TABLE `users`(
 	`description` TEXT
 );
 
-CREATE TABLE `user_friends`(
+CREATE TABLE `user_friend`(
 	`user_id` INT4 NOT NULL UNIQUE,
 	`friend_id` INT4 NOT NULL UNIQUE CHECK(`user_id` != `friend_id`)
 );
@@ -28,8 +28,8 @@ CREATE TABLE `users_groups`(
 	`group_user_name` VARCHAR(50) NOT NULL
 );
 # Create Foreign Keys
-ALTER TABLE users_friends ADD CONSTRAINT fk_us_uf1 FOREIGN KEY(user_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
-ALTER TABLE users_friends ADD CONSTRAINT fk_us_uf2 FOREIGN KEY(friend_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE user_friend ADD CONSTRAINT fk_us_uf1 FOREIGN KEY(user_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE user_friend ADD CONSTRAINT fk_us_uf2 FOREIGN KEY(friend_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE users_groups ADD CONSTRAINT fk_ug_us FOREIGN KEY(user_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE users_groups ADD CONSTRAINT fk_ug_gr FOREIGN KEY(group_id) REFERENCES groups(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
