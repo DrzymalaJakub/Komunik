@@ -1,0 +1,35 @@
+DROP DATABASE if exists Komunik;
+CREATE DATABASE Komunik;
+USE Komunik;
+
+# Create tables
+CREATE TABLE `users`(
+	`id` INT4 NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(50) NOT NULL,
+	`password` VARCHAR(50) NOT NULL,
+	`email` VARCHAR(100) NOT NULL UNIQUE,
+	`birth_date` DATE NOT NULL,
+	`description` TEXT
+);
+
+CREATE TABLE `user_friends`(
+	`user_id` INT4 NOT NULL UNIQUE,
+	`friend_id` INT4 NOT NULL UNIQUE CHECK(`user_id` != `friend_id`)
+);
+
+CREATE TABLE `groups`(
+	`id` INT4 NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE `users_groups`(
+	`user_id` INT4 NOT NULL,
+	`group_id` INT4 NOT NULL,
+	`group_user_name` VARCHAR(50) NOT NULL
+);
+# Create Foreign Keys
+ALTER TABLE users_friends ADD CONSTRAINT fk_us_uf1 FOREIGN KEY(user_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE users_friends ADD CONSTRAINT fk_us_uf2 FOREIGN KEY(friend_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE users_groups ADD CONSTRAINT fk_ug_us FOREIGN KEY(user_id) REFERENCES users(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE users_groups ADD CONSTRAINT fk_ug_gr FOREIGN KEY(group_id) REFERENCES groups(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
